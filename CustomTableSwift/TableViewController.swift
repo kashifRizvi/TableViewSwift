@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import CoreData
 
 class TableViewController: UITableViewController {
     
-    var students = [Any]()
-    var pics = [String:Any]()
+    var parsedData = [[String:String]]()
+    var pics = [String:UIImage]()
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -29,31 +32,73 @@ class TableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let fileUrl = Bundle.main.url(forResource: "Test", withExtension: "json")
         
-        var parsedData = [Any]()
         let jsonData = NSData(contentsOf: fileUrl!)
-                do {
-                    
-                    parsedData = try JSONSerialization.jsonObject(with: jsonData as! Data, options: .allowFragments) as! [Any]
-                    } catch let error as NSError {
-                    print(error)
-                }
-    
-        print(parsedData.count)
+        do {
+            
+            parsedData = try JSONSerialization.jsonObject(with: jsonData as! Data  , options: .allowFragments) as! [[String:String]]
+        } catch let error as NSError {
+            print(error)
+        }
+        
         return parsedData.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
+        var cell = CustomCellClass()
+        cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCellClass
         
+        let row = indexPath.row
+        
+        let currentCellData = parsedData[row]
+        
+        cell.tag = row
+        cell.imageViewCell.image=nil
+        cell.name.text = currentCellData["name"]
+        cell.marks.text = currentCellData["marks"]
+        let imgLink = currentCellData["imageUrl"]!
+        let imgUrl = URL(string: imgLink)
+        
+        if let present = pics[imgLink]{
+            cell.imageViewCell.image=present
+        }
+        else{
+            DispatchQueue.global().async {[weak self] in
+                do {
+                    let imgData = try Data(contentsOf: imgUrl!)
+                    let downloadedImage = UIImage(data: imgData)
+                    print(indexPath.row)
+                    self?.pics[imgLink] = downloadedImage
+                    print(self?.pics[imgLink] ?? "No Image Here!")
+                    DispatchQueue.main.async {
+                        print(" Cell tag : \(cell.tag)")
+                        if cell.tag == row{
+                            cell.imageViewCell.image=downloadedImage
+                        }
+                        else {
+                            print("Data ignored!!")
+                        }
+                    }
+                }
+                catch{
+                    
+                }
+            }
+        }
+        
+//        let student = Student(context : context)
+        getStudentData()
         return cell
     }
     
+    func getStudentData() {
+        
+    }
     
     /*
      // Override to support conditional editing of the table view.

@@ -15,7 +15,10 @@ class CustomCellClass: UITableViewCell {
     @IBOutlet weak var imageViewCell: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+//        self.imageViewCell.image=nil
+    }
+    override func prepareForReuse() {
+        self.imageViewCell.image=nil
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
