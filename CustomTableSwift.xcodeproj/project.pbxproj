@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0C729D1DE7268C0083953C /* Studentdb.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C729B1DE7268C0083953C /* Studentdb.xcdatamodeld */; };
+		4B809AA71DEC170F0010EF18 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B809AA61DEC170F0010EF18 /* TableViewCell.swift */; };
 		4BCB5C3B1DDDB53900C71F88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB5C3A1DDDB53900C71F88 /* AppDelegate.swift */; };
 		4BCB5C3D1DDDB53900C71F88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB5C3C1DDDB53900C71F88 /* ViewController.swift */; };
 		4BCB5C401DDDB53900C71F88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BCB5C3E1DDDB53900C71F88 /* Main.storyboard */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B0C729C1DE7268C0083953C /* Studentdb.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Studentdb.xcdatamodel; sourceTree = "<group>"; };
+		4B809AA61DEC170F0010EF18 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4BCB5C371DDDB53900C71F88 /* CustomTableSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomTableSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BCB5C3A1DDDB53900C71F88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BCB5C3C1DDDB53900C71F88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,11 +107,13 @@
 		4BCB5C391DDDB53900C71F88 /* CustomTableSwift */ = {
 			isa = PBXGroup;
 			children = (
+				4B0C729B1DE7268C0083953C /* Studentdb.xcdatamodeld */,
 				4BCB5C3A1DDDB53900C71F88 /* AppDelegate.swift */,
 				4BCB5C3C1DDDB53900C71F88 /* ViewController.swift */,
 				4BCB5C6C1DDDB8A000C71F88 /* TableViewController.swift */,
 				4BCB5C6A1DDDB78E00C71F88 /* CustomCellClass.swift */,
 				4BCB5C3E1DDDB53900C71F88 /* Main.storyboard */,
+				4B809AA61DEC170F0010EF18 /* TableViewCell.swift */,
 				4BCB5C6E1DDDBDC200C71F88 /* Test.json */,
 				4BCB5C461DDDB53900C71F88 /* Info.plist */,
 				4BCB5C431DDDB53900C71F88 /* LaunchScreen.storyboard */,
@@ -272,7 +278,9 @@
 				4BCB5C3D1DDDB53900C71F88 /* ViewController.swift in Sources */,
 				4BCB5C3B1DDDB53900C71F88 /* AppDelegate.swift in Sources */,
 				4BCB5C6B1DDDB78E00C71F88 /* CustomCellClass.swift in Sources */,
+				4B809AA71DEC170F0010EF18 /* TableViewCell.swift in Sources */,
 				4BCB5C6D1DDDB8A000C71F88 /* TableViewController.swift in Sources */,
+				4B0C729D1DE7268C0083953C /* Studentdb.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +544,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4B0C729B1DE7268C0083953C /* Studentdb.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4B0C729C1DE7268C0083953C /* Studentdb.xcdatamodel */,
+			);
+			currentVersion = 4B0C729C1DE7268C0083953C /* Studentdb.xcdatamodel */;
+			path = Studentdb.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4BCB5C2F1DDDB53900C71F88 /* Project object */;
 }

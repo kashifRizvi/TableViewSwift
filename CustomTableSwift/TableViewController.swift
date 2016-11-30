@@ -13,6 +13,8 @@ class TableViewController: UITableViewController {
     
     var parsedData = [[String:String]]()
     var pics = [String:UIImage]()
+    var studentRecords = [String:AnyObject]()
+    var defaults = UserDefaults.standard
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -20,7 +22,6 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -32,7 +33,7 @@ class TableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let fileUrl = Bundle.main.url(forResource: "Test", withExtension: "json")
         
@@ -57,23 +58,38 @@ class TableViewController: UITableViewController {
         
         let currentCellData = parsedData[row]
         
-        cell.tag = row
-        cell.imageViewCell.image=nil
-        cell.name.text = currentCellData["name"]
-        cell.marks.text = currentCellData["marks"]
+        
+        
+        //        cell.tag = row
+        //        cell.imageViewCell.image=nil
+        //        cell.name.text = currentCellData["name"]
+        //        cell.marks.text = currentCellData["marks"]
         let imgLink = currentCellData["imageUrl"]!
         let imgUrl = URL(string: imgLink)
         
-        if let present = pics[imgLink]{
-            cell.imageViewCell.image=present
+        //        if let present = pics[imgLink]{
+        //            cell.imageViewCell.image=present
+        //        }
+//        let recrd = defaults.object(forKey: "\(row)") as AnyObject?
+        if let recrd = defaults.object(forKey: "\(row)") as AnyObject? {
+            cell.tag = row
+            cell.name.text = recrd["name"] as? String
+            cell.marks.text = recrd["marks"] as? String
         }
         else{
+            cell.name.text = currentCellData["name"]
+            cell.marks.text = currentCellData["marks"]
+            
+            studentRecords["name"] = currentCellData["name"] as AnyObject?
+            studentRecords["marks"] = currentCellData["marks"] as AnyObject?
+            
             DispatchQueue.global().async {[weak self] in
                 do {
                     let imgData = try Data(contentsOf: imgUrl!)
                     let downloadedImage = UIImage(data: imgData)
                     print(indexPath.row)
                     self?.pics[imgLink] = downloadedImage
+                    self?.studentRecords[imgLink] = downloadedImage as AnyObject
                     print(self?.pics[imgLink] ?? "No Image Here!")
                     DispatchQueue.main.async {
                         print(" Cell tag : \(cell.tag)")
@@ -91,13 +107,10 @@ class TableViewController: UITableViewController {
             }
         }
         
-//        let student = Student(context : context)
-        getStudentData()
-        return cell
-    }
-    
-    func getStudentData() {
+        defaults.set(studentRecords, forKey: "\(row)")
+        defaults.synchronize()
         
+        return cell
     }
     
     /*

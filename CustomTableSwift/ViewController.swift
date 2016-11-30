@@ -10,6 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBAction func btnAction(_ sender: UIButton) {
+        let tableViewController = self.storyboard?.instantiateViewController(withIdentifier: "tableViewController") as! TableViewController
+        self.present(tableViewController, animated: true, completion: nil)
+    }
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
