@@ -23,6 +23,7 @@ class TableViewController: UITableViewController {
         
     }
     
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -39,12 +40,10 @@ class TableViewController: UITableViewController {
         
         let jsonData = NSData(contentsOf: fileUrl!)
         do {
-            
             parsedData = try JSONSerialization.jsonObject(with: jsonData as! Data  , options: .allowFragments) as! [[String:String]]
         } catch let error as NSError {
             print(error)
         }
-        
         return parsedData.count
     }
     
@@ -58,41 +57,35 @@ class TableViewController: UITableViewController {
         
         let currentCellData = parsedData[row]
         
-        
-        
-        //        cell.tag = row
-        //        cell.imageViewCell.image=nil
-        //        cell.name.text = currentCellData["name"]
-        //        cell.marks.text = currentCellData["marks"]
+        cell.tag = row
+        cell.imageViewCell.image=nil
+        cell.name.text = currentCellData["name"]
+        cell.marks.text = currentCellData["marks"]
         let imgLink = currentCellData["imageUrl"]!
         let imgUrl = URL(string: imgLink)
         
-        //        if let present = pics[imgLink]{
-        //            cell.imageViewCell.image=present
-        //        }
-//        let recrd = defaults.object(forKey: "\(row)") as AnyObject?
-        if let recrd = defaults.object(forKey: "\(row)") as AnyObject? {
-            cell.tag = row
-            cell.name.text = recrd["name"] as? String
-            cell.marks.text = recrd["marks"] as? String
-        }
-        else{
+        print(" Cell tag in main thread  : \(cell.tag)")
+        print(" Row variable in main thread : \(row)")
+        
+        if let present = pics[imgLink]{
+            cell.imageViewCell.image=present
+            
+        }else{
             cell.name.text = currentCellData["name"]
             cell.marks.text = currentCellData["marks"]
             
-            studentRecords["name"] = currentCellData["name"] as AnyObject?
-            studentRecords["marks"] = currentCellData["marks"] as AnyObject?
-            
-            DispatchQueue.global().async {[weak self] in
+            DispatchQueue.global().async { [weak self] in
                 do {
+                    //                    print(" Cell tag in global thread before fetching : \(cell.tag)")
+                    //                    print(" Row variable in global before fetching thread : \(row)")
                     let imgData = try Data(contentsOf: imgUrl!)
                     let downloadedImage = UIImage(data: imgData)
-                    print(indexPath.row)
+                    //                    print(" Cell tag in global thread after fetching : \(cell.tag)")
+                    //                    print(" Row variable in global thread after fetching : \(row)")
                     self?.pics[imgLink] = downloadedImage
-                    self?.studentRecords[imgLink] = downloadedImage as AnyObject
-                    print(self?.pics[imgLink] ?? "No Image Here!")
                     DispatchQueue.main.async {
-                        print(" Cell tag : \(cell.tag)")
+                        //                        print(" Cell tag in main in global thread : \(cell.tag)")
+                        //                        print(" Row variable in main in global thread : \(row)")
                         if cell.tag == row{
                             cell.imageViewCell.image=downloadedImage
                         }
@@ -106,9 +99,6 @@ class TableViewController: UITableViewController {
                 }
             }
         }
-        
-        defaults.set(studentRecords, forKey: "\(row)")
-        defaults.synchronize()
         
         return cell
     }

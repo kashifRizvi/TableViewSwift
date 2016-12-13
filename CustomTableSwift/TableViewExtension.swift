@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+extension TableViewController{
+    
+    func new(rom: Double) -> Double {
+        return rom * rom
+    }
+}

@@ -13,10 +13,12 @@ class CustomCellClass: UITableViewCell {
     @IBOutlet weak var marks: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var imageViewCell: UIImageView!
+    var id:Int?
+    var imageDataDownloaded:UIImage?
     override func awakeFromNib() {
         super.awakeFromNib()
-//        self.imageViewCell.image=nil
     }
+    
     override func prepareForReuse() {
         self.imageViewCell.image=nil
     }
