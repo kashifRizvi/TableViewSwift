@@ -64,8 +64,8 @@ class TableViewController: UITableViewController {
         let imgLink = currentCellData["imageUrl"]!
         let imgUrl = URL(string: imgLink)
         
-        print(" Cell tag in main thread  : \(cell.tag)")
-        print(" Row variable in main thread : \(row)")
+//        print(" Cell tag in main thread  : \(cell.tag)")
+//        print(" Row variable in main thread : \(row)")
         
         if let present = pics[imgLink]{
             cell.imageViewCell.image=present
@@ -95,7 +95,7 @@ class TableViewController: UITableViewController {
                     }
                 }
                 catch{
-                    
+                    print("Can't fetch image, connection cant be made!")
                 }
             }
         }
