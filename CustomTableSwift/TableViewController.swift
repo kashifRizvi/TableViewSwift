@@ -12,11 +12,11 @@ import CoreData
 class TableViewController: UITableViewController {
     
     var parsedData = [[String:String]]()
-    var pics = [String:UIImage]()
+    var picsFetched = [String:UIImage]()
     var studentRecords = [String:AnyObject]()
     var defaults = UserDefaults.standard
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +67,8 @@ class TableViewController: UITableViewController {
 //        print(" Cell tag in main thread  : \(cell.tag)")
 //        print(" Row variable in main thread : \(row)")
         
-        if let present = pics[imgLink]{
-            cell.imageViewCell.image=present
+        if let savedPic = picsFetched[imgLink]{
+            cell.imageViewCell.image=savedPic
             
         }else{
             cell.name.text = currentCellData["name"]
@@ -82,7 +82,7 @@ class TableViewController: UITableViewController {
                     let downloadedImage = UIImage(data: imgData)
                     //                    print(" Cell tag in global thread after fetching : \(cell.tag)")
                     //                    print(" Row variable in global thread after fetching : \(row)")
-                    self?.pics[imgLink] = downloadedImage
+                    self?.picsFetched[imgLink] = downloadedImage
                     DispatchQueue.main.async {
                         //                        print(" Cell tag in main in global thread : \(cell.tag)")
                         //                        print(" Row variable in main in global thread : \(row)")
@@ -90,7 +90,7 @@ class TableViewController: UITableViewController {
                             cell.imageViewCell.image=downloadedImage
                         }
                         else {
-                            print("Data ignored!!")
+                            print("Image downloaded but not set on UI")
                         }
                     }
                 }
